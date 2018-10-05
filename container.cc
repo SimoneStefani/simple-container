@@ -29,6 +29,10 @@ int run(const char *name) {
 
 // Child process.
 int jail(void *args) {
+
+    // Remove all environment variables for this process.
+    clearenv();
+
     // Load the shell process.
     run("/bin/sh");
 
