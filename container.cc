@@ -17,8 +17,21 @@ char* stack_memory() {
   return stack + stackSize;
 }
 
+// The exec() family of functions replaces the current process image with a new 
+// process image. The execv() function provide an array of pointers to 
+// null-terminated strings that represent the argument list available to the 
+// new program. The first argument, by convention, should point to the filename 
+// associated with the file being executed. 
+int run(const char *name) {
+  char *_args[] = {(char *)name, (char *)0 };
+  execvp(name, _args);
+}
+
+// Child process.
 int jail(void *args) {
-    printf("Hello !! (child)\n");
+    // Load the shell process.
+    run("/bin/sh");
+
     return EXIT_SUCCESS;
 }
 
