@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# If we pass any arguments...
+if [ $# -gt 0 ]; then
+
+    # Start up container
+    if [ "$1" == "start" ]; then
+        docker run -it --rm --name dev-container -v "$PWD":/home/ simple-container bash
+
+    # Stop the container
+    elif [ "$1" == "stop" ]; then
+        docker stop dev-container
+
+    # Build container
+    elif [ "$1" == "build" ]; then
+        docker build -t simple-container .
+
+    # Else, pass-thru args to docker
+    else
+        docker "$@"
+    fi
+else
+    docker ps
+fi
